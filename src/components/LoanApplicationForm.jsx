@@ -95,20 +95,25 @@ function CustomSelect({ options, placeholder, value, onChange, required, id }) {
   )
 }
 
+const INITIAL_FORM = {
+  surname: '',
+  name: '',
+  phone: '',
+  loanType: '',
+  branch: '',
+  comment: '',
+}
+
 export default function LoanApplicationForm() {
-  const [form, setForm] = useState({
-    surname: '',
-    name: '',
-    phone: '',
-    loanType: '',
-    branch: '',
-    comment: '',
-  })
+  const [form, setForm] = useState(INITIAL_FORM)
   const [errors, setErrors] = useState({})
+  const [submitting, setSubmitting] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState(null)
 
   const handleChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }))
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: null }))
+    setSubmitMessage(null)
   }
 
   const validate = () => {
@@ -122,11 +127,42 @@ export default function LoanApplicationForm() {
     return Object.keys(next).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setSubmitMessage(null)
     if (!validate()) return
-    console.log('Submitted:', form)
-    alert('Таны хүсэлт амжилттай илгээгдлээ. Манай зээлийн эдийн засагч тантай холбогдох болно.')
+
+    const loanTypeLabel = LOAN_TYPES.find((o) => o.value === form.loanType)?.label || form.loanType
+    const branchLabel = BRANCHES.find((o) => o.value === form.branch)?.label || form.branch
+
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/send-zeel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          surname: form.surname.trim(),
+          name: form.name.trim(),
+          phone: form.phone.trim(),
+          loanType: form.loanType,
+          loanTypeLabel,
+          branch: form.branch,
+          branchLabel,
+          comment: form.comment.trim(),
+        }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setSubmitMessage({ type: 'error', text: data.error || 'Илгээхэд алдаа гарлаа. Дахин оролдоно уу.' })
+        return
+      }
+      setSubmitMessage({ type: 'success', text: 'Таны хүсэлт амжилттай илгээгдлээ. Манай зээлийн эдийн засагч тантай холбогдох болно.' })
+      setForm(INITIAL_FORM)
+    } catch (_) {
+      setSubmitMessage({ type: 'error', text: 'Холболт амжилтгүй. Дахин оролдоно уу.' })
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -226,8 +262,13 @@ export default function LoanApplicationForm() {
           />
         </div>
 
-        <button type="submit" className="submit-btn">
-          ХҮСЭЛТ ИЛГЭЭХ
+        {submitMessage && (
+          <div className={`submit-message ${submitMessage.type}`}>
+            {submitMessage.text}
+          </div>
+        )}
+        <button type="submit" className="submit-btn" disabled={submitting}>
+          {submitting ? 'Илгээж байна...' : 'ХҮСЭЛТ ИЛГЭЭХ'}
         </button>
       </form>
     </div>
