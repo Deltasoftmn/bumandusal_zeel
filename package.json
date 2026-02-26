@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "vite build && echo 'Build done. Push dist/ or enable GitHub Pages with branch gh-pages or docs.'"
+    "deploy": "vite build && echo 'Build done. Push dist/ or enable GitHub Pages with branch gh-pages or docs.'",
+    "test:mail": "node scripts/test-mail.js"
   },
   "dependencies": {
     "react": "^18.2.0",
