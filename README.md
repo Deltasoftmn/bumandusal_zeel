@@ -32,6 +32,7 @@ In your Vercel project → **Settings → Environment Variables**, add:
 | `RESEND_API_KEY` | Yes | Your API key from [Resend Dashboard](https://resend.com/api-keys). |
 | `RESEND_TO_EMAIL` | Yes* | Inbox where all applications are sent (e.g. `loans@yourcompany.mn`). Use this if every branch shares one inbox. |
 | `RESEND_FROM` | No | Sender address (default: `onboarding@resend.dev`). Use a [verified domain](https://resend.com/domains) in production. |
+| `RESEND_LOGO_URL` | No | Full URL to your logo image (e.g. `https://yoursite.vercel.app/logo.png`) to show a mini logo in the email header. |
 | `BRANCH_EMAILS` | No | JSON map of branch → worker email. Example: `{"central":"office@company.mn","gurvaljin":"gurvaljin@company.mn"}`. If set, the selected branch’s worker gets the email; otherwise all go to `RESEND_TO_EMAIL`. |
 
 \* Either `RESEND_TO_EMAIL` or `BRANCH_EMAILS` (with the selected branch key) must be set.

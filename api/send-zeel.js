@@ -24,8 +24,9 @@ function getToEmail(branch) {
 function buildHtml(body) {
   const { surname, name, phone, loanTypeLabel, branchLabel, comment } = body
   const phoneFull = `+976 ${phone}`
-  const accent = '#a67c52'
-  const accentLight = '#f8f5f1'
+  const accent = '#006361'
+  const accentLight = '#e6f2f2'
+  const logoUrl = process.env.RESEND_LOGO_URL || ''
   const row = (label, value) =>
     `<tr><td style="padding: 12px 16px; border-bottom: 1px solid #eee; font-size: 14px; color: #5c5c5c;">${escape(label)}</td><td style="padding: 12px 16px; border-bottom: 1px solid #eee; font-size: 14px; color: #1a1a1a; text-align: right;">${escape(value)}</td></tr>`
   const rows = [
@@ -52,6 +53,7 @@ function buildHtml(body) {
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 520px; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
           <tr>
             <td style="background-color: ${accent}; padding: 20px 24px; text-align: center;">
+              ${logoUrl ? `<img src="${escape(logoUrl)}" alt="Logo" width="120" height="40" style="max-width: 120px; max-height: 40px; height: auto; display: inline-block; margin-bottom: 12px; object-fit: contain;" />` : ''}
               <h1 style="margin: 0; font-size: 18px; font-weight: 600; color: #ffffff; letter-spacing: 0.02em;">ЗЭЭЛИЙН ХҮСЭЛТ</h1>
               <p style="margin: 6px 0 0; font-size: 13px; color: rgba(255,255,255,0.9);">Шинэ хүсэлт ирлээ</p>
             </td>
