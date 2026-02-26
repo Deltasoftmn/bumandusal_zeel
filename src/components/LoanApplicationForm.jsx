@@ -2,9 +2,12 @@ import { useState, useRef, useEffect } from 'react'
 
 const LOAN_TYPES = [
   { value: 'business', label: 'Бизнесийн зээл' },
-  { value: 'car', label: 'Автомашин зээл' },
   { value: 'consumer', label: 'Хэрэглээний зээл' },
-  { value: 'travel', label: 'Аяллын зээл' },
+  { value: 'car-lease', label: 'Автомашины лизингийн зээл' },
+  { value: 'car-purchase', label: 'Автомашин / Улсын дугаартай / худалдан авах зээл' },
+  { value: 'tuition', label: 'Сургалтын төлбөрийн зээл' },
+  { value: 'business-line', label: 'Бизнес шугаман зээл' },
+  { value: 'number-collateral', label: 'Дугаар барьцаалсан зээл' },
 ]
 
 const BRANCHES = [
