@@ -18,21 +18,54 @@ function getToEmail(branch) {
 function buildHtml(body) {
   const { surname, name, phone, loanTypeLabel, branchLabel, comment } = body
   const phoneFull = `+976 ${phone}`
+  const accent = '#a67c52'
+  const accentLight = '#f8f5f1'
+  const row = (label, value) =>
+    `<tr><td style="padding: 12px 16px; border-bottom: 1px solid #eee; font-size: 14px; color: #5c5c5c;">${escape(label)}</td><td style="padding: 12px 16px; border-bottom: 1px solid #eee; font-size: 14px; color: #1a1a1a; text-align: right;">${escape(value)}</td></tr>`
+  const rows = [
+    row('Овог', surname),
+    row('Нэр', name),
+    row('Утас', phoneFull),
+    row('Зээлийн төрөл', loanTypeLabel),
+    row('Салбар', branchLabel),
+  ]
+  if (comment) rows.push(row('Тайлбар', comment))
+
   return `
 <!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><title>Зээлийн хүсэлт</title></head>
-<body style="font-family: system-ui, sans-serif; line-height: 1.5; color: #1a1a1a; max-width: 560px; margin: 0 auto; padding: 24px;">
-  <h2 style="margin-top: 0;">Шинэ зээлийн хүсэлт</h2>
-  <table style="width: 100%; border-collapse: collapse;">
-    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Овог</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escape(surname)}</td></tr>
-    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Нэр</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escape(name)}</td></tr>
-    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Утас</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escape(phoneFull)}</td></tr>
-    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Зээлийн төрөл</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escape(loanTypeLabel)}</td></tr>
-    <tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Салбар</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escape(branchLabel)}</td></tr>
-    ${comment ? `<tr><td style="padding: 8px 0; border-bottom: 1px solid #eee;"><strong>Тайлбар</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #eee;">${escape(comment)}</td></tr>` : ''}
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зээлийн хүсэлт</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #e8eae9; line-height: 1.5;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #e8eae9; padding: 32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 520px; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+          <tr>
+            <td style="background-color: ${accent}; padding: 20px 24px; text-align: center;">
+              <h1 style="margin: 0; font-size: 18px; font-weight: 600; color: #ffffff; letter-spacing: 0.02em;">ЗЭЭЛИЙН ХҮСЭЛТ</h1>
+              <p style="margin: 6px 0 0; font-size: 13px; color: rgba(255,255,255,0.9);">Шинэ хүсэлт ирлээ</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 28px 0 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                ${rows.join('')}
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 16px 24px 20px; background-color: ${accentLight}; border-top: 1px solid #eee;">
+              <p style="margin: 0; font-size: 12px; color: #6b7280; text-align: center;">Энэ имэйл нь цахим зээлийн хүсэлтийн системээс автоматаар илгээгдсэн.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
   </table>
-  <p style="margin-top: 24px; font-size: 14px; color: #666;">Энэ имэйл нь цахим зээлийн хүсэлтийн системээс автоматаар илгээгдсэн.</p>
 </body>
 </html>
   `.trim()
