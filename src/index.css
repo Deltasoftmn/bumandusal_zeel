@@ -12,8 +12,8 @@
   --border: #d1d5db;
   --border-focus: #8b8f94;
   --input-bg: #fafafa;
-  --accent: #a67c52;
-  --accent-hover: #8f6b45;
+  --accent: #006361;
+  --accent-hover: #007a78;
   --error: #b91c1c;
   --radius: 6px;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
@@ -43,6 +43,20 @@ body {
   box-shadow: var(--shadow-lg);
   padding: 2rem 1.75rem;
   border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.loan-form-logo {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.loan-form-logo img {
+  max-width: 180px;
+  max-height: 64px;
+  width: auto;
+  height: auto;
+  display: inline-block;
+  object-fit: contain;
 }
 
 .loan-form-title {
@@ -307,7 +321,7 @@ body {
 
 .submit-btn:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(166, 124, 82, 0.4);
+  box-shadow: 0 0 0 2px rgba(0, 99, 97, 0.4);
 }
 
 .submit-btn:disabled {

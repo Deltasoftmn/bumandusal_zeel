@@ -8,14 +8,11 @@ const LOAN_TYPES = [
 ]
 
 const BRANCHES = [
-  { value: 'central', label: 'Төв оффис' },
-  { value: 'gurvaljin', label: 'Гурвалжин салбар' },
-  { value: '22', label: '22 салбар' },
-  { value: 'dakhuree', label: 'Да хүрээ салбар' },
-  { value: 'maxmall', label: 'Макс Молл салбар' },
-  { value: 'khanuul', label: 'Хан-Уул салбар' },
-  { value: 'achlal', label: 'Ачлал салбар' },
-  { value: 'soyoolj', label: 'Соёолж молл салбар' },
+  { value: 'central', label: 'Төв салбар' },
+  { value: '22avtokom', label: '22 автоком салбар' },
+  { value: 'soyoolj', label: 'Соёолж салбар' },
+  { value: 'diesel', label: 'Дизель хүрээ салбар' },
+  { value: 'orkhon-bayanondor', label: 'Орхон Баян-Өндөр салбар' },
 ]
 
 function CustomSelect({ options, placeholder, value, onChange, required, id }) {
@@ -167,6 +164,9 @@ export default function LoanApplicationForm() {
 
   return (
     <div className="loan-form-card">
+      <div className="loan-form-logo">
+        <img src="/logo.png" alt="Logo" onError={(e) => e.target.closest('.loan-form-logo').style.display = 'none'} />
+      </div>
       <h1 className="loan-form-title">ЗЭЭЛИЙН ХҮСЭЛТ</h1>
       <p className="loan-form-intro">
         Та доорх цахим зээлийн хүсэлтийн мэдээллийг үнэн зөв бөглөж илгээнэ үү!
