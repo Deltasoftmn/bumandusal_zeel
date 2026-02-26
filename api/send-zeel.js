@@ -2,9 +2,15 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-// Branch value -> worker email. Set BRANCH_EMAILS (JSON) for per-branch emails,
-// e.g. {"central":"office@company.mn","gurvaljin":"gurvaljin@company.mn"}.
-// Otherwise all requests go to RESEND_TO_EMAIL (one inbox for testing or routing).
+// Branch value -> worker email. Env BRANCH_EMAILS (JSON) overrides if set.
+const BRANCH_EMAIL_MAP = {
+  central: 'm.orgil@bumandusal.mn',           // Төв салбар
+  '22avtokom': 'oyunaa@bumandusal.mn',        // 22 автоком салбар
+  soyoolj: 'tasgabranchceo@bumandusal.mn',   // Соёолж салбар
+  diesel: 'Daadirector@bumandusal.mn',        // Дизель хүрээ салбар
+  'orkhon-bayanondor': 'suvd@bumandusal.mn', // Орхон Баян-Өндөр салбар
+}
+
 function getToEmail(branch) {
   if (process.env.BRANCH_EMAILS) {
     try {
@@ -12,7 +18,7 @@ function getToEmail(branch) {
       if (map[branch]) return map[branch]
     } catch (_) {}
   }
-  return process.env.RESEND_TO_EMAIL
+  return BRANCH_EMAIL_MAP[branch] || process.env.RESEND_TO_EMAIL
 }
 
 function buildHtml(body) {
